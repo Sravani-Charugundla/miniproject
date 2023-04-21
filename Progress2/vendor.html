@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vendor1</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">  </head>
+  <body>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+		<a class="navbar-brand" href="#">Vendor-1</a>
+		<!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+		  <span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavDropdown">
+		  <ul class="navbar-nav">
+			<li class="nav-item active">
+			  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" href="#">Features</a>
+			</li>
+			<li class="nav-item">
+			  <a class="nav-link" href="#">Pricing</a>
+			</li>
+			<li class="nav-item dropdown">
+			  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Dropdown link
+			  </a>
+			  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+				<a class="dropdown-item" href="#">Action</a>
+				<a class="dropdown-item" href="#">Another action</a>
+				<a class="dropdown-item" href="#">Something else here</a>
+			  </div>
+			</li>
+		  </ul>
+		</div> -->
+	  </nav>
+	  <br>
+	  <br>
+    <!-- <h1>Manufacturer 1</h1> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.2.7-rc.0/web3.min.js"></script>
+    <h1 style="text-align: center;">
+        VENDOR 1:
+    </h1>
+	<br>
+	<br>
+	<div style="text-align: center;">
+    <button onclick="readWord()" class="btn btn-info">GET PENDING REQUESTS</button> <br>
+	</div>
+    <div class="form-check" id="1" >
+      <!-- <input class="form-check-input" type="checkbox" value=""> -->
+
+    </div>
+    <!-- <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="1">
+      <label class="form-check-label" for="flexCheckDefault">
+        ${data[i][0]}
+      </label>
+      
+    </div> -->
+    <p id="accountArea">Connection Status: NOT CONNECTED to Metamask </p>
+    <p id="contractArea">Connection Status: NOT CONNECTED to Smart Contract</p>
+    <!-- Modal -->
+
+    <script>
+      const readWord = async () => {
+        
+        let s=0;
+        const ABI =[
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "a",
+				"type": "uint256"
+			}
+		],
+		"name": "addprice",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string[][]",
+				"name": "a",
+				"type": "string[][]"
+			}
+		],
+		"name": "save",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "arr",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_pairs",
+		"outputs": [
+			{
+				"internalType": "string[][]",
+				"name": "",
+				"type": "string[][]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "key_val_pairs",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "showprice",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+            const Address = "0x806693A4AEBF401B09aC88876226D724c6AC73Cb";
+            window.web3 = await new Web3(window.ethereum);
+            window.contract = await new window.web3.eth.Contract(ABI, Address);
+            document.getElementById("contractArea").innerHTML = "Connection Status: Success";
+            str="";
+            
+            const data = await window.contract.methods.get_pairs().call();
+            if(s==0){
+              for(let i=0;i<data.length;i++){
+				var quant = data[i][1];
+
+                str+=`
+				
+                <div class="form-check" style="text-align: center;">
+					<span class="inline">
+      <input class="form-check-input" type="checkbox" value="">
+      <label class="form-check-label" for="flexCheckDefault">
+        ${data[i][0]}
+      </label>
+	  <label class="form-check-label" for="flexCheckDefault">
+        ${data[i][1]} units
+      </label>
+	  <input type="number" placeholder="costperunit" id='${i}1' onChange="getNumber()">
+	  <input type="text"  name="cst" id='${i}2' value=0 placeholder="Gross product price (Rs.)"> 
+	  </span>
+	  
+    </div>`;
+	
+	
+	
+
+              }
+              document.getElementById("1").innerHTML+=str;
+              
+            }
+            s+=1;
+        }
+		
+		var i = 0;
+		var sum = 0;
+		const getNumber = async ()=>{
+		const data = await window.contract.methods.get_pairs().call();
+
+		var q = `${data[i][1]}`;
+		var v = document.getElementById(`${i}1`).value;
+		var p = v*q;
+		var cst = p;
+		document.getElementById(`${i}2`).value = p;
+		sum = sum + p;
+		console.log(p);
+		console.log(sum);
+		document.getElementById("usernameInput").value=sum;
+		i++;
+	}
+	// var cst = p;
+	// document.getElementById("price").value = p;
+		
+        
+            
+    </script>
+    <input type="text"  name="username" id="usernameInput"> 
+	<script> 
+		var username = sum;
+		document.getElementById("usernameInput").value = sum;
+	  </script>
+	  
+    <button onclick="submit()">SUBMIT</button>
+	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+		Show Summary
+	  </button>
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h1 class="modal-title fs-5" id="staticBackdropLabel">Summary</h1>
+			  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" >
+				<table class="table" >
+					<thead>
+					  <tr>
+						<th scope="col">Item</th>
+						<th scope="col">Quantity</th>
+						<th scope="col">CostperUnit</th>
+						<th scope="col">Gross product price (Rs.)</th>
+					  </tr>
+					</thead>
+					<tbody id="u" >
+					</tbody>
+				  </table>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			  
+			</div>
+		  </div>
+		</div>
+	  </div>
+	<!-- Button trigger modal -->
+
+    <script>
+      const submit = async () => {
+		
+        let account;
+        if(window.ethereum !== "undefined"){
+                const accounts = await ethereum.request({method: "eth_requestAccounts"});
+                account = accounts[0];
+                document.getElementById("accountArea").innerHTML = `Account is: ${account}`;
+            }
+      const myEntry = document.getElementById("usernameInput").value;
+      // const tt=document.getElementById("specificSizeSelect").value;
+      await window.contract.methods.addprice(myEntry).send({ from: account });
+	  let e1,r1,t;
+            const ABI =[
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "a",
+				"type": "uint256"
+			}
+		],
+		"name": "addprice",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string[][]",
+				"name": "a",
+				"type": "string[][]"
+			}
+		],
+		"name": "save",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "arr",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_pairs",
+		"outputs": [
+			{
+				"internalType": "string[][]",
+				"name": "",
+				"type": "string[][]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "key_val_pairs",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "showprice",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+            const Address = "0x806693A4AEBF401B09aC88876226D724c6AC73Cb";
+            window.web3 = await new Web3(window.ethereum);
+            window.contract = await new window.web3.eth.Contract(ABI, Address);
+            const data = await window.contract.methods.get_pairs().call();
+			let st="";
+			for(let i=0;i<data.length;i++){
+
+				e1=document.getElementById(`${i}1`).value;
+				console.log("zzz")
+				r1=`${data[i][1]}`;
+				t=e1*r1;
+				console.log(t)
+				st+=`
+				
+					<tr>
+						<td>${data[i][0]}</td>
+						<td>${data[i][1]}</td>
+						<td>${e1}</td>
+						<td>${t}</td>
+					  </tr>
+				  
+		 
+				`
+			}
+			st+=`<tr>
+				<td>
+					<p>TOTAL</p>
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					${sum}
+				</td>
+				</tr>`
+
+			console.log(st);
+			document.getElementById("u").innerHTML+=st
+	  
+  }
+    </script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+	
+  </body>
+</html>
