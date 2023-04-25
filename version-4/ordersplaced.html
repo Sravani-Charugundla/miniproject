@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Orders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.2.7-rc.0/web3.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  </head>
+  <body onload="connectMetamask();connectContract();readWord();">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#"><h1>Requests</h1></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <!-- <li class="nav-item active">
+              <a class="nav-link" href="vendor.html"><h3>Vendor1</h3><span class="sr-only"></span></a>
+            </li> -->
+            <li class="nav-item active">
+              <a class="nav-link" href="exp.html"><h4>Buyer</h4><span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html"><h4>Home</h4><span class="sr-only"></span></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+	  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h1 class="modal-title fs-5" id="staticBackdropLabel">Summary</h1>
+			  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" >
+				<table class="table" >
+					<thead >
+					  <tr>
+						<th scope="col">Vendor</th>
+						<th scope="col">Quote</th>
+						<th scope="col">Accept/Decline</th>
+						<th scope="col">Summary</th>
+					  </tr>
+					</thead>
+					<tbody id="u">
+					</tbody>
+				  </table>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			  
+			</div>
+		  </div>
+		</div>
+	  </div>
+	<!-- Button trigger modal -->
+
+      <!-- <button onclick="connectMetamask()">CONNECT TO METAMASK</button> <br> -->
+	<p id="accountArea" style="text-align: end;">Connection Status: NOT CONNECTED to Metamask </p>
+
+	<!-- <button onclick="connectContract()">CONNECT TO CONTRACT</button> <br> -->
+	<p id="contractArea" style="text-align: end;">Connection Status: NOT CONNECTED to Smart Contract</p>
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-12">
+          <h1>Order history</h1>
+          <hr>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card-group">
+            <div class="row" id="card-container"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let account;
+        const connectMetamask = async () => {
+            if(window.ethereum !== "undefined"){
+                const accounts = await ethereum.request({method: "eth_requestAccounts"});
+                account = accounts[0];
+                document.getElementById("accountArea").innerHTML = `Account is: ${account}`;
+            }
+
+        }
+		var i;
+        const connectContract = async () => {
+            const ABI =[
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "a",
+				"type": "uint256"
+			}
+		],
+		"name": "addprice",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string[][]",
+				"name": "b",
+				"type": "string[][]"
+			}
+		],
+		"name": "orders",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string[][]",
+				"name": "a",
+				"type": "string[][]"
+			}
+		],
+		"name": "save",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "arr",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "display1DArray",
+		"outputs": [
+			{
+				"internalType": "string[][]",
+				"name": "",
+				"type": "string[][]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "displayord",
+		"outputs": [
+			{
+				"internalType": "string[][]",
+				"name": "",
+				"type": "string[][]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_ord",
+		"outputs": [
+			{
+				"internalType": "string[][]",
+				"name": "",
+				"type": "string[][]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_pairs",
+		"outputs": [
+			{
+				"internalType": "string[][]",
+				"name": "",
+				"type": "string[][]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_req",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "key_val_pairs",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "showprice",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "vendors",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+            const Address = "0x084fe452BcF0cAA66F3B615143bAD15E4CC2E990";
+            window.web3 = await new Web3(window.ethereum);
+            window.contract = await new window.web3.eth.Contract(ABI, Address);
+            document.getElementById("contractArea").innerHTML = "Contract Connection Status: Success";
+        }
+		
+	
+        const readWord = async () => {
+			
+			
+          const ABI =[
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "a",
+				"type": "uint256"
+			}
+		],
+		"name": "addprice",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string[][]",
+				"name": "b",
+				"type": "string[][]"
+			}
+		],
+		"name": "orders",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string[][]",
+				"name": "a",
+				"type": "string[][]"
+			}
+		],
+		"name": "save",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "arr",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "display1DArray",
+		"outputs": [
+			{
+				"internalType": "string[][]",
+				"name": "",
+				"type": "string[][]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "displayord",
+		"outputs": [
+			{
+				"internalType": "string[][]",
+				"name": "",
+				"type": "string[][]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_ord",
+		"outputs": [
+			{
+				"internalType": "string[][]",
+				"name": "",
+				"type": "string[][]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_pairs",
+		"outputs": [
+			{
+				"internalType": "string[][]",
+				"name": "",
+				"type": "string[][]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "get_req",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "key_val_pairs",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "showprice",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "vendors",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+            const Address = "0x084fe452BcF0cAA66F3B615143bAD15E4CC2E990";
+            window.web3 = await new Web3(window.ethereum);
+            window.contract = await new window.web3.eth.Contract(ABI, Address);
+          const cnt = await window.contract.methods.get_req().call();
+		  const data = await window.contract.methods.display1DArray().call();
+          var ln = cnt.length;
+            console.log(cnt.length);
+            let cardHtml = "";
+
+            // Loop through the items array
+            for (i = cnt.length-1; i>=0; i--) {
+
+              // Check if the item meets a condition
+              
+                // If the condition is met, create a card with a light background
+                cardHtml += `
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card bg-light">
+                      <div class="card-body">
+                        <h5 class="card-title">Order${i+1}</h5>
+						<table class="table" id="${i}6"> 
+							<thead>
+							<tr>
+								<th scope="col">Item</th>
+								<th scope="col">Quantity</th>
+							</tr>
+							</thead>
+							<tbody >
+							</tbody>
+						</table>
+                        <span class="inline">
+                        <h8 class="card-text">Status</h8>
+                        <input type="text" id = "${i}3" placeholder="Status" value="Pending" readonly="true">
+                        </span>
+                        <br>
+                        <br>
+                        
+                        <button type="button" class="btn btn-primary" onclick="showquote(this.id)" id="${i}" data-bs-target="#staticBackdrop" data-bs-toggle="modal">Show quotations</button>
+
+                      </div>
+                    </div>
+                  </div>
+                `;  
+            }
+			
+            // Add the card HTML to the card container
+            document.getElementById("card-container").innerHTML = cardHtml; 
+
+			// var nord = cnt.length-1;
+			// var ci = data.length-1;
+			// var sf=" ";
+			// for(k=ci;k>=ci-cnt[nord];k--)
+			// {
+			// 	sf+=`<tr>
+			// 		<td>${data[k][0]}</td>
+			// 		<td>${data[k][1]}</td>
+			// 		</tr>`
+			// 	console.log(sf);
+			// 	nord = nord-1;
+			// 	document.getElementById(`${k}6`).innerHTML=sf;
+				
+			// }
+			
+			 
+            }
+              
+
+			
+        
+		const Accept = async(aid)=>{
+			const newValue = "Accepted";
+
+		
+			console.log(aid);
+			 // The new value to set in the textbox and store in local storage
+			
+			if (aid === "03") { // Check if the ID is "03"
+				document.getElementById("03").value = newValue;
+				localStorage.setItem("03", newValue);
+			} else { // For all other IDs
+				document.getElementById(aid).value = newValue;
+				localStorage.setItem(aid, newValue);
+  }
+			
+
+		}
+	  const showquote = async (buttonId) => {
+
+		const quote = await window.contract.methods.displayord().call();
+		var orno = buttonId;
+		var st="";
+		for(let q=0;q<quote.length;q++)
+		{
+			console.log(quote[q][0]);
+			if(quote[q][0]==orno)
+			{
+				
+				st+=`
+				
+					<tr>
+						<td>${quote[q][1]}</td>
+						<td>${quote[q][2]}</td>
+						<td><button type="button" class="btn btn-success" onclick="Accept(${orno}3)" id="${q}ac">Accept</button></td>
+						<td><button type="button" class="btn btn-info">Info</button></td>
+					  </tr>
+				  
+		 
+				`
+
+
+			}
+		}
+		document.getElementById("u").innerHTML=st
+		console.log(st);		 
+		
+	  }
+
+       
+    </script>
+	
+	<!-- <div class="container text-center">
+		<div class="row align-items-start">
+		  <div class="col">
+			
+		  </div>
+		  
+		</div>
+	  </div>
+    
+	  </div> -->
+	
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+  </body>
+</html>
